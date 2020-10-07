@@ -132,23 +132,23 @@ const parseStr2Json = (str) => {
   }
 };
 
-const runBuild = ({ buildPlatform, buildTarget }) => {
-  return new Promise((resolve, reject) => {
-    const buildCmd = buildPlatform === "win" ? "dist:win32" : "dist:mac";
-    const process = child_process.spawn(
-      "sh",
-      ["../run-build.sh", buildTarget, buildCmd],
-      {
-        cwd: __dirname,
-      }
-    );
+const runBuild = () => {
+  const URL_FIELD = "Download URL";
 
-    // Retured data from runing script
-    process.stdout.on("data", (data) => {
-      resolve(data);
+  return new Promise((resolve, reject) => {
+    const process = child_process.spawn("sh", ["../run-build.sh"], {
+      cwd: __dirname,
     });
-    process.stderr.on("data", (error) => {
-      reject(error);
+    // Retured data from runing script
+    process.stdout.on("data", (dataBuf) => {
+      const dataTxt = dataBuf.toString("utf8");
+      if (dataTxt.includes(URL_FIELD)) {
+        resolve(dataTxt);
+      }
+    });
+    process.stderr.on("data", (errorBuf) => {
+      const errorTxt = errorBuf.toString("utf8");
+      reject(errorTxt);
     });
   });
 };

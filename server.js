@@ -36,15 +36,13 @@ server.on("upgrade", (req, socket) => {
     if (message) {
       runBuild(message)
         .then((data) => {
-          socket.write(
-            constructReply({ message: data.toString("utf8").trim() })
-          );
+          socket.write(constructReply({ message: data }));
         })
         .catch((error) => {
           socket.write(
             constructReply({
               error: true,
-              message: error.toString("utf8").trim(),
+              message: error,
             })
           );
         });
