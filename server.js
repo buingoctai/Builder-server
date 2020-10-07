@@ -41,7 +41,7 @@ server.on("upgrade", (req, socket) => {
         .catch((error) => {
           socket.write(
             constructReply({
-              error: true,
+              isError: true,
               message: error,
             })
           );

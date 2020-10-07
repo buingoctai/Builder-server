@@ -132,18 +132,31 @@ const parseStr2Json = (str) => {
   }
 };
 
-const runBuild = () => {
+const getDownLoadUrl = (str) => {
   const URL_FIELD = "Download URL";
+  const arrEcho = str.split("\n");
+  const urlArr = arrEcho.filter((item) => item.includes(URL_FIELD) == true);
+
+  return urlArr[0];
+};
+const runBuild = (message) => {
+  /* Extact build infor from message */
 
   return new Promise((resolve, reject) => {
-    const process = child_process.spawn("sh", ["../run-build.sh"], {
-      cwd: __dirname,
-    });
+    const process = child_process.spawn(
+      "sh",
+      ["../run-build.sh", "param1", "param2"],
+      {
+        cwd: __dirname,
+      }
+    );
     // Retured data from runing script
     process.stdout.on("data", (dataBuf) => {
       const dataTxt = dataBuf.toString("utf8");
-      if (dataTxt.includes(URL_FIELD)) {
-        resolve(dataTxt);
+      const url = getDownLoadUrl(dataTxt);
+
+      if (url) {
+        resolve(url);
       }
     });
     process.stderr.on("data", (errorBuf) => {
