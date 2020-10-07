@@ -141,11 +141,19 @@ const getDownLoadUrl = (str) => {
 };
 const runBuild = (message) => {
   /* Extact build infor from message */
+  const { buildType, buildInfor } = message;
+  const { buildBranch, buildTagVersion, buildTagType } = buildInfor;
 
   return new Promise((resolve, reject) => {
     const process = child_process.spawn(
       "sh",
-      ["../run-build.sh", "param1", "param2"],
+      [
+        "../run-build.sh",
+        buildType,
+        buildBranch,
+        buildTagVersion,
+        buildTagType,
+      ],
       {
         cwd: __dirname,
       }
@@ -153,6 +161,7 @@ const runBuild = (message) => {
     // Retured data from runing script
     process.stdout.on("data", (dataBuf) => {
       const dataTxt = dataBuf.toString("utf8");
+      console.log("dataTxt", dataTxt);
       const url = getDownLoadUrl(dataTxt);
 
       if (url) {
