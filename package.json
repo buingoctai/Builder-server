@@ -1,0 +1,17 @@
+{
+  "name": "builder-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/buingoctai/Builder-server.git",
+  "author": "buingoctai <buingoctai994@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "builder-module"
+  ],
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "nodemon": "^2.0.4",
+    "ws": "^7.3.1"
+  }
+}
