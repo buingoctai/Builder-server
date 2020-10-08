@@ -94,8 +94,6 @@ const parseMessage = (buf) => {
     // At this point we have the actual data, so make a json
     const json = data.toString("utf8");
     return parseStr2Json(json);
-  } else {
-    return "LOL IDK?!";
   }
 };
 const constructReply = (data) => {
@@ -134,8 +132,8 @@ const parseStr2Json = (str) => {
 
 const getDownLoadUrl = (str) => {
   const URL_FIELD = "Download URL";
-  const arrEcho = str.split("\n");
-  const urlArr = arrEcho.filter((item) => item.includes(URL_FIELD) == true);
+  const echoArr = str.split("\n");
+  const urlArr = echoArr.filter((item) => item.includes(URL_FIELD) == true);
 
   return urlArr[0];
 };
@@ -161,7 +159,6 @@ const runBuild = (message) => {
     // Retured data from runing script
     process.stdout.on("data", (dataBuf) => {
       const dataTxt = dataBuf.toString("utf8");
-      console.log("dataTxt", dataTxt);
       const url = getDownLoadUrl(dataTxt);
 
       if (url) {
