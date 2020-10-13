@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 3
+sleep 5
 BUILD_TYPE=$1
 BUILD_BRANCH=$2
 BUILD_TAG_VERSION=$3
