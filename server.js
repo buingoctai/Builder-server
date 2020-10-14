@@ -25,9 +25,9 @@ server.on("upgrade", (req, socket) => {
   // Check exchanged data format
   const protocol = req.headers["sec-websocket-protocol"];
   const protocols = !protocol ? [] : protocol.split(",").map((s) => s.trim());
-  // if (protocols.includes("json")) {
-  //   responseHeaders.push("Sec-WebSocket-Protocol:json");
-  // }
+  if (protocols.includes("json")) {
+    responseHeaders.push("Sec-WebSocket-Protocol:json");
+  }
   socket.write(responseHeaders.join("\r\n") + "\r\n\r\n");
   // Listen incoming message from client
   socket.on("data", (buffer) => {
